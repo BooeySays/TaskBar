@@ -1,0 +1,26 @@
+#!/bin/bash
+
+export taskbarclr="\033[48;5;9m"
+
+function __get_task(){
+	echo -en "\033c\nWhat's this terminal's task?: "
+	read -r TASK_MSG
+}
+
+function ct(){
+    if [ $# == 0 ]; then
+        __get_task
+	elif [ $# == 2 ] && [ $1 == '-t' ]; then
+    	TASK_MSG=$2
+	fi
+}
+
+function __draw_line(){
+	tput sc
+	tput cup 0 0
+	echo -en "$taskbarclr"
+	printf ' %.s' $(seq 1 $COLUMNS)
+	echo -en  "\r\033[2C\033[01;36mⅈ ℹ¡ᵢpⅈ⒤❘❙❚❙❘ \033[m"$taskbarclr" "$TASK_MSG"\033[m\n"
+	tput rc
+}
+#ℹ¡ᵢpⅈ⒤❘❙❚❙❘
